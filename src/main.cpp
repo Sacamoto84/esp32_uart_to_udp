@@ -158,6 +158,6 @@ void loop() {
   {
     portal_tick();   
     oled_refresh();
-    delay(1000);
+    delay(100);
   }
 }

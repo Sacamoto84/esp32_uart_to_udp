@@ -11,7 +11,7 @@ int timeout        = 1000;    //Задержка новос строки
 int echo           = 1;       //Эхо на Serial
 int broadcast      = 0;       //Использовать броадкаст пакеты
 
-uint all_TX_to_UDP;
+uint all_TX_to_UDP; //Общее количество отправленных байт в UDP
 uint all_RX_from_UDP;
 
 void EXT_reset(void)
