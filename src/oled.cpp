@@ -6,12 +6,22 @@
 #include "model.h"
 
 #include "MicrosoftSansSerif24.h"
+#include "NotoSansBold15.h"
+#include "RoboMono_Regular_15.h"
 
 extern ListUI listUI;
 
 #define AA_FONT_SMALL MicrosoftSansSerif18
+
+#define AA_FONT_SMALL15 NotoSansBold15
+#define AA_FONT_ROBOMONO15 RoboMonoRegular15
+
 #define TFT_GREY 0x7BEF
 TFT_eSPI tft = TFT_eSPI(); // Invoke custom library
+TFT_eSprite face = TFT_eSprite(&tft);
+
+#define FACE_W 240
+#define FACE_H 60
 
 void oled_begin(void)
 {
@@ -28,7 +38,14 @@ void oled_begin(void)
 
   tft.drawEllipse(120, 120, 100, 100, random(0xFFFF));
   // We can now plot text on screen using the "print" class
+
+
+
+  tft.loadFont(AA_FONT_ROBOMONO15);    // Must load the font first
   tft.println("Hello Креведко 123");
+
+  face.createSprite(FACE_W, FACE_H);
+
 
   // tft.setTextDatum(MC_DATUM);
   //  tft.loadFont(AA_FONT_SMALL);    // Must load the font first
@@ -56,7 +73,7 @@ void oled_refresh(void)
 
   // oled.clearDisplay();
 
-  tft.fillScreen(0);
+  //tft.fillScreen(0);
 
   sprintf(str, "SSID: %s", lp.ssid);
   tft.setCursor(0, 0);
@@ -66,15 +83,15 @@ void oled_refresh(void)
   // tft.setCursor(0,8);
   tft.println(str);
 
-  sprintf(str, "IP:   %s", WiFi.localIP().toString());
+  sprintf(str, "IP:        %s", WiFi.localIP().toString());
   // tft.setCursor(0,16);
   tft.println(str);
 
-  sprintf(str, "Client: %s", ipchar);
+  sprintf(str, "CLIENT: %s", ipchar);
   // tft.setCursor(0,24);
   tft.println(str);
 
-  sprintf(str, "Bitrate: %d", Serial2Bitrate);
+  sprintf(str, "BITRATE: %d", Serial2Bitrate);
   // tft.setCursor(0,32);
   tft.println(str);
 
@@ -86,12 +103,18 @@ void oled_refresh(void)
   // tft.setCursor(0,48);
   tft.println(str);
 
+
+  face.fillSprite(TFT_DARKGREEN);
+  face.setTextColor(TFT_GOLD, TFT_BLACK);
+  face.loadFont(AA_FONT_ROBOMONO15);    // Must load the font first
+  face.drawString("TFT_eSPI", 15, 15);
+  
   for (int i = 0; i < MAX_L; i++)
   {
     int index = (listUI.size + i - (MAX_L - 1)) % MAX_L;
-    tft.println(listUI.list[index].c_str());
+    //face.println(listUI.list[index].c_str());
   }
-
+  face.pushSprite(0, 120, TFT_TRANSPARENT);
   // //sprintf(str, "Status");
   // //oled.setCursor(0,56);
   // //oled.print(str);

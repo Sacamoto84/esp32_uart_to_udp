@@ -3,8 +3,8 @@
 
 #include <mString.h>
 
-#define MAX_S 64
-#define MAX_L 8
+#define MAX_S 27
+#define MAX_L 3
 
 class ListUI
 {
