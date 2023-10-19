@@ -56,11 +56,11 @@ void setup() {
   
   //
   char str[64];
-  oled.setCursor(0, 0);  oled.print(APP_TITLE);
-  sprintf(str, "SSID: %s", lp.ssid);   
-  oled.setCursor(0, 10);  oled.print(str);
-  oled.setCursor(0, 20);  sprintf(str, "PASS: %s", lp.pass); oled.print(str);
-  oled.setCursor(0, 34);  oled.print("Connecting to STA");   oled.setCursor(0, 48);
+  //oled.setCursor(0, 0);  oled.print(APP_TITLE);
+  //sprintf(str, "SSID: %s", lp.ssid);   
+  //oled.setCursor(0, 10);  oled.print(str);
+  //oled.setCursor(0, 20);  sprintf(str, "PASS: %s", lp.pass); oled.print(str);
+  //oled.setCursor(0, 34);  oled.print("Connecting to STA");   oled.setCursor(0, 48);
   //
 
   int count  = 0;
@@ -69,8 +69,8 @@ void setup() {
     delay(500);
     Serial.print(".");
 
-    oled.print(".");
-    oled.display();
+    //oled.print(".");
+    //oled.display();
 
     count++;
     if (count>20)
@@ -85,14 +85,14 @@ void setup() {
   //Создаем точку доступа
   if (needAP)
   {
-    oled.clearDisplay();
-    oled.setCursor(0, 0);
-    oled.setTextSize(2);
-    oled.print("AP Mode");
-    oled.setCursor(0, 32);
-    oled.print("SSID: AP32");
+    //oled.clearDisplay();
+    //oled.setCursor(0, 0);
+    //oled.setTextSize(2);
+    //oled.print("AP Mode");
+    //oled.setCursor(0, 32);
+    //oled.print("SSID: AP32");
 
-    oled.display();
+    //oled.display();
 
     // запускаем точку доступа
     WiFi.mode(WIFI_AP);
@@ -130,11 +130,11 @@ if(udp.listen(8889)) {
   xTaskCreatePinnedToCore(
   TaskReadUART,     /* Функция для задачи */
   "TaskReadUART",   /* Имя задачи */
-  10000,     /* Размер стека */
-  NULL,      /* Параметр задачи */
-  0,        /* Приоритет */
-  &Task1,    /* Выполняемая операция */
-  1);        /* Номер ядра, на котором она должна выполняться */
+  10000,            /* Размер стека */
+  NULL,             /* Параметр задачи */
+  0,                /* Приоритет */
+  &Task1,           /* Выполняемая операция */
+  1);               /* Номер ядра, на котором она должна выполняться */
 
   oled_refresh();
 
