@@ -4,7 +4,7 @@
 #include <mString.h>
 
 #define MAX_S 27
-#define MAX_L 8
+#define MAX_L 12
 
 class ListUI
 {

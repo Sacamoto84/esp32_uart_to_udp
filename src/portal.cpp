@@ -34,7 +34,7 @@ void build()
   GP.BUILD_BEGIN();
   GP.THEME(GP_LIGHT);
 
-  GP.TITLE("ESP32 Terminal V19 19.10.2023");
+  GP.TITLE(ESP_TITLE);
   GP.HR();
 
   // GP.NAV_TABS_LINKS("/,/wifi");
@@ -45,13 +45,13 @@ void build()
 
       GP_MAKE_BOX(
           GP.LABEL("SSID");
-          GP.TEXT("lg", "Login", lp.ssid);)
+          GP.TEXT("lg", "Login", lp.ssid););
 
       GP_MAKE_BOX(
           GP.LABEL("Пароль");
-          GP.TEXT("ps", "Password", lp.pass);)
+          GP.TEXT("ps", "Password", lp.pass););
 
-          GP.SUBMIT("Сохранить");
+      GP.SUBMIT("Сохранить");
 
       GP.FORM_END();
 
@@ -67,35 +67,35 @@ void build()
       GP_MAKE_BOX(
           GP.TEXT("ipclient", "ipclient", ipchar);     // │
           GP.BUTTON_MINI("saveipclient", "Сохранить"); // │
-          )
-          //GP.BREAK(); // │
+      );
+      
+      // GP.BREAK(); // │
       // └────────────────────────────────────────────────────┘
       // ┌────────────────────────────────────────────────────┐
       GP.LABEL("Serial2 битрейт"); // │
       GP_MAKE_BOX(
           GP.NUMBER("bitrate", "bitrate", Serial2Bitrate); // │
           GP.BUTTON_MINI("saveBR", "Сохранить");           // │
-          )
+      );
       // └────────────────────────────────────────────────────┘
       // ┌────────────────────────────────────────────────────┐
-      //GP.BREAK();                                 // │
-      GP.LABEL("Таймаут новой строки ms");        // │
+      // GP.BREAK();                                 // │
+      GP.LABEL("Таймаут новой строки ms"); // │
       GP_MAKE_BOX(
-      GP.NUMBER("timeout", "timeout", timeout);   // │
-      GP.BUTTON_MINI("saveTimeout", "Сохранить");)
+          GP.NUMBER("timeout", "timeout", timeout); // │
+          GP.BUTTON_MINI("saveTimeout", "Сохранить"););
       // └────────────────────────────────────────────────────┘
       // ┌────────────────────────────────────────────────────┐
       GP.BREAK(); // │
 
       GP_MAKE_BOX(
           GP.LABEL("Использовать broadcast");
-          GP.CHECK("сheck_broadcast", broadcast);
-          )
+          GP.CHECK("сheck_broadcast", broadcast););
 
       GP_MAKE_BOX(
           GP.LABEL("Эхо на Serial");    // │
           GP.CHECK("сheck_echo", echo); // │
-          )
+      );
       // └────────────────────────────────────────────────────┘
   );
 

@@ -2,6 +2,11 @@
 #include "AsyncUDP.h"
 #include <WiFi.h>
 
+#include <TFT_eSPI.h> // Hardware-specific library
+#include <SPI.h>
+
+extern TFT_eSPI tft;
+
 //Mark: UDP-------------------------------------------------------
 AsyncUDP udp;
 //-----------------------------------------------------------------
@@ -42,13 +47,16 @@ void setup() {
 
   oled_begin();
 
-  EEPROM_READ_ip_client();      //Читаем из EEPROM адресс клиента -> ipchar
+  EEPROM_READ_ip_client(); //Читаем из EEPROM адресс клиента -> ipchar
   EEPROM_READ_timeout();   //Прочитать из EEPROM таймаут
   EEPROM_READ_echo();      //Прочитать из EEPROM echo
   EEPROM_READ_broadcast(); //Прочитать из EEPROM broadcast
 
   EEPROM.get(0, lp);  
-  Serial.print(">EEPROM READ SSID:");  Serial.println(lp.ssid);  Serial.print(">EEPROM READ PASS:"); Serial.println(lp.pass);
+  Serial.print(">EEPROM READ SSID:");  
+  Serial.println(lp.ssid);  
+  Serial.print(">EEPROM READ PASS:"); 
+  Serial.println(lp.pass);
 
   //Подключение к Wifi
   WiFi.mode(WIFI_STA);
@@ -63,11 +71,15 @@ void setup() {
   //oled.setCursor(0, 34);  oled.print("Connecting to STA");   oled.setCursor(0, 48);
   //
 
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.print("Подключание");
   int count  = 0;
   bool needAP = false; //Если сети нет создаем точку доступа
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    tft.print(".");
+
 
     //oled.print(".");
     //oled.display();
@@ -111,15 +123,15 @@ void setup() {
   //подключаем конструктор и запускаем
   portal_start();
 
-if(udp.listen(8889)) {
-     Serial.println("udp.listen(8889)");
-     udp.onPacket(parsePacket);
-  }
+// if(udp.listen(8889)) {
+//      Serial.println("udp.listen(8889)");
+//      udp.onPacket(parsePacket);
+//   }
 
  if (broadcast == 0)
  {
     mString <32> s;
-    s += APP_TITLE;
+    s += ESP_TITLE;
     IPAddress ipclient;
     ipclient.fromString(ipchar);
     udp.writeTo((uint8_t* )s.c_str(), s.length() , ipclient , 8888, TCPIP_ADAPTER_IF_MAX);      
@@ -154,10 +166,10 @@ void parsePacket(AsyncUDPPacket packet)
 }
 
 void loop() {
-  while(1)
-  {
+  //while(1)
+  //{
     portal_tick();   
     oled_refresh();
-    delay(100);
-  }
+    //delay(10);
+  //}
 }

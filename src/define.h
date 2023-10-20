@@ -1,6 +1,8 @@
 #ifndef _define_h
 #define _define_h
 
+#define ESP_TITLE "ESP32 Terminal V24"
+
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "mString.h"
