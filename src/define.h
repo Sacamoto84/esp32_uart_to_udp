@@ -1,15 +1,13 @@
 #ifndef _define_h
 #define _define_h
 
-#define ESP_TITLE "ESP32 Terminal V24"
+#define ESP_TITLE "ESP32 Terminal V25"
 
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "mString.h"
 
 #include <Wire.h>
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_SSD1306.h>
 
 #include "AsyncUDP.h"
 
@@ -22,6 +20,14 @@
 #include "HardwareSerial.h"
 #include "soc/soc_caps.h"
 #include "driver\uart.h"
+
+#include "RoboMonoRegular15.h"
+#include "RoboMonoRegular20.h"
+#include "RoboMonoRegular24.h"
+
+#define AA_FONT_ROBOMONO15 RoboMonoRegular15
+#define AA_FONT_ROBOMONO20 RoboMonoRegular20
+#define AA_FONT_ROBOMONO24 RoboMonoRegular24
 
 //┌────────────────────────────────────────────────────┐
 #define APP_TITLE  "UART to UDP V15\n"

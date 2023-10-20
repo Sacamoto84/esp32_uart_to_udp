@@ -1,5 +1,3 @@
-
-
 #include "define.h"
 #include <Wire.h>
 #include "WiFi.h"
@@ -7,16 +5,7 @@
 #include <SPI.h>
 #include "model.h"
 
-#include "MicrosoftSansSerif24.h"
-#include "NotoSansBold15.h"
-#include "RoboMono_Regular_15.h"
-
 extern ListUI listUI;
-
-#define AA_FONT_SMALL MicrosoftSansSerif18
-
-#define AA_FONT_SMALL15 NotoSansBold15
-#define AA_FONT_ROBOMONO15 RoboMonoRegular15
 
 #define TFT_GREY 0x7BEF
 TFT_eSPI tft = TFT_eSPI(); // Invoke custom library
@@ -29,7 +18,6 @@ void facePrint(int y, const char *str);
 void facePrint(int y, const char *str)
 {
   face.fillSprite(0);
-  //face.setTextColor(TFT_WHITE, TFT_BLACK);
   face.setCursor(0, 0);
   face.drawString(str, 0, 0);
   face.pushSprite(0, y, TFT_TRANSPARENT);
@@ -38,7 +26,6 @@ void facePrint(int y, const char *str)
 void facePrint(int y, int x0, int x1, const char *str0, const char *str1)
 {
   face.fillSprite(TFT_BLACK);
-  //face.setTextColor(TFT_WHITE, TFT_BLACK);
   face.drawString(str0, x0, 0);
   face.drawString(str1, x1, 0);
   face.pushSprite(0, y, TFT_TRANSPARENT);
@@ -50,39 +37,29 @@ void oled_begin(void)
   tft.setRotation(1);
   tft.fillScreen(0);
   tft.setCursor(0, 0, 2);
-  // Set the font colour to be white with a black background, set text size multiplier to 1
+
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(1);
-  //tft.drawEllipse(120, 120, 100, 100, random(0xFFFF));
-  // We can now plot text on screen using the "print" class
-  tft.loadFont(AA_FONT_ROBOMONO15); // Must load the font first
-  tft.println(ESP_TITLE);
 
   face.createSprite(FACE_W, FACE_H);
-  face.loadFont(AA_FONT_ROBOMONO15); // Must load the font first
+  face.loadFont(AA_FONT_ROBOMONO15);
 }
 
 void oled_refresh(void)
 {
   char str[64];
-
   face.setTextColor(TFT_WHITE, TFT_BLACK);
-  //facePrint(0, 0, 100, lp.ssid, lp.pass);
-
   facePrint(0, 0, 80, "IP:", WiFi.localIP().toString().c_str());
   facePrint(14, 0, 80, "CLIENT:", ipchar);
   sprintf(str, "%d", Serial2Bitrate); 
   facePrint(28,  0, 80, "BITRATE:", str);
   sprintf(str, "E:%d B:%d TX:%lu", echo, broadcast, all_TX_to_UDP);
   facePrint(42, str);
-
   face.setTextColor(TFT_GREEN, TFT_BLACK);
   for (int i = 0; i < MAX_L; i++) {
     int index = (listUI.size + i - (MAX_L - 1)) % MAX_L;
     facePrint(60 + 15 * i, listUI.list[index].c_str());
   }
-  
   tft.drawFastHLine(0, 59, 240, TFT_RED);
   tft.drawFastHLine(0, 239, 240, TFT_RED);
-
 }
