@@ -50,13 +50,18 @@ void oled_refresh(void)
   char str[64];
   face.setTextColor(TFT_WHITE, TFT_BLACK);
   facePrint(0, 0, 80, "IP:", WiFi.localIP().toString().c_str());
-  facePrint(14, 0, 80, "CLIENT:", ipchar);
-  sprintf(str, "%d", Serial2Bitrate); 
-  facePrint(28,  0, 80, "BITRATE:", str);
+  if (needAP)
+    facePrint(14, 0, 80, "CLIENT:", "192.168.4.2");
+  else
+    facePrint(14, 0, 80, "CLIENT:", ipchar);
+
+  sprintf(str, "%d", Serial2Bitrate);
+  facePrint(28, 0, 80, "BITRATE:", str);
   sprintf(str, "E:%d B:%d TX:%lu", echo, broadcast, all_TX_to_UDP);
   facePrint(42, str);
   face.setTextColor(TFT_GREEN, TFT_BLACK);
-  for (int i = 0; i < MAX_L; i++) {
+  for (int i = 0; i < MAX_L; i++)
+  {
     int index = (listUI.size + i - (MAX_L - 1)) % MAX_L;
     facePrint(60 + 15 * i, listUI.list[index].c_str());
   }

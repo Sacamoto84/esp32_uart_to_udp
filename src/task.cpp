@@ -44,8 +44,9 @@ void TaskReadUART(void *parameter)
 
       if (broadcast == 0)
       {
-        IPAddress ipclient;
-        ipclient.fromString(ipchar);
+        
+        //ipclient.fromString(ipchar);
+
         udp.writeTo((uint8_t *)buf, strlen(buf), ipclient, 8888, TCPIP_ADAPTER_IF_MAX);
       }
       else

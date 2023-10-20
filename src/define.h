@@ -1,7 +1,7 @@
 #ifndef _define_h
 #define _define_h
 
-#define ESP_TITLE "ESP32 Terminal V25"
+#define ESP_TITLE "ESP32 Terminal V26"
 
 #include <Arduino.h>
 #include <EEPROM.h>
@@ -29,37 +29,38 @@
 #define AA_FONT_ROBOMONO20 RoboMonoRegular20
 #define AA_FONT_ROBOMONO24 RoboMonoRegular24
 
-//┌────────────────────────────────────────────────────┐
-#define APP_TITLE  "UART to UDP V15\n"
-#define SERIAL2_SIZE_RX  1024*96
-//└────────────────────────────────────────────────────┘
-//┌────────────────────────────────────────────────────┐
-//  MARK: EEPROM ADRESS
-#define EEPROM_ADRESS_Serial2Bitrate 40  //Адресс битрейта 
-#define EEPROM_ADRESS_timeout        44
-#define EEPROM_ADRESS_echo           48
-#define EEPROM_ADRESS_IP_CLIENT      52
-#define EEPROM_ADRESS_broadcast      72
-//└────────────────────────────────────────────────────┘
-//┌────────────────────────────────────────────────────┐
-//MARK: Define
+// ┌────────────────────────────────────────────────────┐
+#define APP_TITLE "UART to UDP V15\n"
+#define SERIAL2_SIZE_RX 1024 * 96
+// └────────────────────────────────────────────────────┘
+// ┌────────────────────────────────────────────────────┐
+//   MARK: EEPROM ADRESS
+#define EEPROM_ADRESS_Serial2Bitrate 40 // Адресс битрейта
+#define EEPROM_ADRESS_timeout 44
+#define EEPROM_ADRESS_echo 48
+#define EEPROM_ADRESS_IP_CLIENT 52
+#define EEPROM_ADRESS_broadcast 72
+// └────────────────────────────────────────────────────┘
+// ┌────────────────────────────────────────────────────┐
+// MARK: Define
 #define AP_SSID "TP-Link_BC0C"
 #define AP_PASS "58133514"
 #define RXD2 16
 #define TXD2 17
 #define RTS2 21
 
-#define OLED_MOSI   23
-#define OLED_CLK    18 
-#define OLED_DC     33 
-#define OLED_CS     5
-#define OLED_RESET  19 
+#define OLED_MOSI 23
+#define OLED_CLK 18
+#define OLED_DC 33
+#define OLED_CS 5
+#define OLED_RESET 19
 
-#define EXT_RESET   26 
+#define EXT_RESET 26
 
-//└────────────────────────────────────────────────────┘
+// └────────────────────────────────────────────────────┘
 
-struct LoginPass {
+struct LoginPass
+{
   char ssid[20];
   char pass[20];
 };
@@ -68,12 +69,16 @@ extern LoginPass lp;
 
 extern char ipchar[20];
 
-//Глобальный настройки
-extern int SerialBitrate;     //Битрейт
-extern int Serial2Bitrate;    //Битрейт
-extern int timeout;           //Задержка новос строки
-extern int echo;              //Эхо на Serial
-extern int broadcast;         //Использовать броадкаст пакеты
+// Глобальный настройки
+extern int SerialBitrate;  // Битрейт
+extern int Serial2Bitrate; // Битрейт
+extern int timeout;        // Задержка новос строки
+extern int echo;           // Эхо на Serial
+extern int broadcast;      // Использовать броадкаст пакеты
+
+extern bool needAP; // Если сети нет создаем точку доступа
+
+extern IPAddress ipclient;
 
 extern uint all_TX_to_UDP;
 extern uint all_RX_from_UDP;
@@ -82,26 +87,26 @@ extern uint all_RX_from_UDP;
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
-//extern Adafruit_SSD1306 oled;
+// extern Adafruit_SSD1306 oled;
 //
 
 void EXT_reset(void);
 
-//MARK: EEPROM
+// MARK: EEPROM
 void EEPROM_READ_ip_client(void);
-void EEPROM_READ_Serial2Bitrate(void); //Прочитать из EEPROM битрейт для Serial2
-void EEPROM_READ_timeout(void);        //Прочитать из EEPROM таймаут
-void EEPROM_READ_echo(void);           //Прочитать из EEPROM echo
-void EEPROM_READ_broadcast(void);      //Прочитать из EEPROM broadcast
+void EEPROM_READ_Serial2Bitrate(void); // Прочитать из EEPROM битрейт для Serial2
+void EEPROM_READ_timeout(void);        // Прочитать из EEPROM таймаут
+void EEPROM_READ_echo(void);           // Прочитать из EEPROM echo
+void EEPROM_READ_broadcast(void);      // Прочитать из EEPROM broadcast
 
-//MARK: OLED
+// MARK: OLED
 void oled_begin(void);
 void oled_refresh(void);
 
-//MARK :Task
-void TaskReadUART( void * parameter);
+// MARK :Task
+void TaskReadUART(void *parameter);
 
-//MARK: Portal
+// MARK: Portal
 void portal_start(void);
 void portal_startAP(void);
 void portal_tick(void);

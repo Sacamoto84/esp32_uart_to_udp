@@ -79,7 +79,7 @@ void setup()
 
   tft.println("\nПодключание");
   int count = 0;
-  bool needAP = false; // Если сети нет создаем точку доступа
+
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
@@ -105,18 +105,19 @@ void setup()
     tft.setTextColor(TFT_YELLOW, TFT_BLACK);
     tft.println("Создаем точку доступа");
     tft.setTextColor(TFT_SKYBLUE, TFT_BLACK);
-    tft.println("SSID: AP ESP32");
+    tft.println("SSID: AP ESP");
     tft.println("http://192.168.4.1");
     // запускаем точку доступа
     WiFi.mode(WIFI_AP);
-    WiFi.softAP("AP ESP32");
+    WiFi.softAP("AP ESP");
     // запускаем портал
     portal_start();
     // работа портала
-    while (true)
-    {
-      portal_tick();
-    }
+
+    // while (true)
+    //{
+    portal_tick();
+    //}
   }
   Serial.println();
   Serial.print("Connected! Local IP: ");
@@ -134,8 +135,12 @@ void setup()
   {
     mString<32> s;
     s += ESP_TITLE;
-    IPAddress ipclient;
-    ipclient.fromString(ipchar);
+    
+    if (needAP)
+      ipclient.fromString("192.168.4.2");
+    else
+      ipclient.fromString(ipchar);
+
     udp.writeTo((uint8_t *)s.c_str(), s.length(), ipclient, 8888, TCPIP_ADAPTER_IF_MAX);
   }
   else
